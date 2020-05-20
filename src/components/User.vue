@@ -1,14 +1,22 @@
 <template>
   <div class="user">
     <h1>User Component</h1>
-    <p>I'm an awesome user!</p>
+    <p>I'm {{ name }}!</p>
+    <button @click="changeName()" class="btn btn-warning">
+      Change my name
+    </button>
     <hr />
     <div class="row">
       <div class="col-6">
-        <app-user-detail></app-user-detail>
+        <app-user-detail
+          :name="name"
+          @nameWasReset="name = $event"
+          :resetFn="resetName"
+          :userAge="userAge"
+        ></app-user-detail>
       </div>
       <div class="col-6">
-        <app-user-edit></app-user-edit>
+        <app-user-edit :userAge="userAge"></app-user-edit>
       </div>
     </div>
   </div>
@@ -19,14 +27,27 @@ import UserDetail from './UserDetail';
 import UserEdit from './UserEdit';
 
 export default {
+  data() {
+    return {
+      name: 'Fadhlu',
+      userAge: 25,
+    };
+  },
   components: {
     appUserDetail: UserDetail,
     appUserEdit: UserEdit,
   },
+  methods: {
+    changeName() {
+      this.name = 'Sasa';
+    },
+    resetName() {
+      this.name = 'Fadhlu';
+    },
+  },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .user {
   background: #3498db;
